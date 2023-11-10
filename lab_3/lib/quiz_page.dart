@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lab_3/answer_button.dart';
+import 'package:lab_3/question_text.dart';
+import 'package:lab_3/score.dart';
 
 import 'quiz_brain.dart';
 
@@ -11,30 +14,54 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   final QuizBrain _quizBrain = QuizBrain();
+  final List<Icon> _scoreKeeper = [];
 
-  final List<Widget> scoreKeeper = [];
+  int get _asserts {
+    return _scoreKeeper.where((element) => element.icon == Icons.check).length;
+  }
 
-  void Function() checkAnswer(bool userAnswer) {
-    void wrapper() {
-      bool correctAnswer = _quizBrain.questionAnswer;
+  void _checkAnswer(bool userAnswer) {
+    bool correctAnswer = _quizBrain.questionAnswer;
 
-      setState(() {
-        if (userAnswer == correctAnswer) {
-          scoreKeeper.add(const Icon(
-            Icons.check,
-            color: Colors.green,
-          ));
-        } else {
-          scoreKeeper.add(const Icon(
-            Icons.close,
-            color: Colors.red,
-          ));
-        }
-        _quizBrain.nextQuestion();
-      });
-    }
+    setState(() {
+      if (userAnswer == correctAnswer) {
+        _scoreKeeper.add(const Icon(
+          Icons.check,
+          color: Colors.green,
+        ));
+      } else {
+        _scoreKeeper.add(const Icon(
+          Icons.close,
+          color: Colors.red,
+        ));
+      }
+      _quizBrain.nextQuestion();
 
-    return wrapper;
+      if (!_quizBrain.hasFinished) return;
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Quiz Finished'),
+            content: Text('You scored $_asserts out of 10'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    _quizBrain.reset();
+                    _scoreKeeper.clear();
+                  });
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+        barrierDismissible: false,
+      );
+    });
   }
 
   @override
@@ -52,56 +79,30 @@ class _QuizPageState extends State<QuizPage> {
         children: [
           Expanded(
             flex: 5,
-            child: Center(
-              child: Text(
-                _quizBrain.questionText,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                ),
+            child: QuestionText(_quizBrain.questionText),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: AnswerButton(
+                onPressed: () => _checkAnswer(true),
+                text: 'True',
+                backgroundColor: Colors.green,
               ),
             ),
           ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16),
-              child: TextButton(
-                onPressed: checkAnswer(true),
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.green,
-                ),
-                child: const Text(
-                  'True',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                  ),
-                ),
+              child: AnswerButton(
+                onPressed: () => _checkAnswer(false),
+                text: 'False',
+                backgroundColor: Colors.red,
               ),
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: TextButton(
-                onPressed: checkAnswer(false),
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.red,
-                ),
-                child: const Text(
-                  'False',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: scoreKeeper,
+          Score(
+            scoreKeeper: _scoreKeeper,
           ),
         ],
       ),

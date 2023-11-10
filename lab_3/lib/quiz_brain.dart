@@ -2,6 +2,7 @@ import 'question.dart';
 
 class QuizBrain {
   int _questionNumber = 0;
+  bool _hasFinished = false;
 
   final List<Question> _questionList = [
     Question('Linus Torvalds created Linux and Git.', true),
@@ -24,16 +25,25 @@ class QuizBrain {
   ];
 
   String get questionText => _questionList[_questionNumber].question;
-
   bool get questionAnswer => _questionList[_questionNumber].answer;
+  bool get hasFinished => _hasFinished;
 
   QuizBrain() {
     _questionList.shuffle();
   }
 
+  void reset() {
+    _questionNumber = 0;
+    _questionList.shuffle();
+    _hasFinished = false;
+  }
+
   void nextQuestion() {
     if (_questionNumber < _questionList.length - 1) {
       _questionNumber++;
+      return;
     }
+
+    _hasFinished = true;
   }
 }
