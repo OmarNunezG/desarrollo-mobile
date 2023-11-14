@@ -20,6 +20,13 @@ class _QuizPageState extends State<QuizPage> {
     return _scoreKeeper.where((element) => element.icon == Icons.check).length;
   }
 
+  void _resetScore() {
+    setState(() {
+      _quizBrain.reset();
+      _scoreKeeper.clear();
+    });
+  }
+
   void _checkAnswer(bool userAnswer) {
     bool correctAnswer = _quizBrain.questionAnswer;
 
@@ -49,10 +56,7 @@ class _QuizPageState extends State<QuizPage> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  setState(() {
-                    _quizBrain.reset();
-                    _scoreKeeper.clear();
-                  });
+                  _resetScore();
                 },
                 child: const Text('OK'),
               ),
@@ -101,8 +105,10 @@ class _QuizPageState extends State<QuizPage> {
               ),
             ),
           ),
-          Score(
-            scoreKeeper: _scoreKeeper,
+          Expanded(
+            child: Score(
+              scoreKeeper: _scoreKeeper,
+            ),
           ),
         ],
       ),
