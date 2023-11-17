@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:lab_5/answer_button.dart';
-import 'package:lab_5/data/questions.dart';
+
+import 'answer_button.dart';
+import 'data/questions.dart';
 
 class QuizPage extends StatefulWidget {
   const QuizPage({super.key});
