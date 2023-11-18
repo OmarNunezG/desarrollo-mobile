@@ -1,25 +1,59 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
-import 'answer_button.dart';
-import 'data/questions.dart';
+import 'answers_list.dart';
+import 'finished_dialog.dart';
+import 'question_title.dart';
+import 'quiz_brain.dart';
+import 'start_screen.dart';
 
 class QuizPage extends StatefulWidget {
-  const QuizPage({super.key});
+  final void Function(Widget) _switchScreen;
+
+  const QuizPage(void Function(Widget) switchScreen, {super.key})
+      : _switchScreen = switchScreen;
 
   @override
   State<QuizPage> createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
-  int _questionNumber = 0;
+  late final QuizBrain _quizBrain;
 
-  void nextQuestion() => setState(() => _questionNumber++);
+  @override
+  void initState() {
+    _quizBrain = QuizBrain(_onFinish);
+    super.initState();
+  }
+
+  void _restart() {
+    setState(() {
+      Navigator.of(context).pop();
+      _quizBrain.reset();
+      widget._switchScreen(StartScreen(widget._switchScreen));
+    });
+  }
+
+  void _onFinish() {
+    showDialog(
+      context: context,
+      builder: (context) => FinishedDialog(
+        score: _quizBrain.asserts,
+        total: _quizBrain.totalQuestions,
+        onPressed: _restart,
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  void _nextQuestion(String answer) {
+    setState(() {
+      _quizBrain.checkAnswer(answer);
+      _quizBrain.nextQuestion();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final currentQuestion = questions[_questionNumber];
-
     return Center(
       child: Container(
         margin: const EdgeInsets.all(30),
@@ -27,20 +61,16 @@ class _QuizPageState extends State<QuizPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              currentQuestion.question,
-              style: GoogleFonts.lato(
-                fontSize: 24,
-                color: const Color.fromARGB(255, 201, 153, 251),
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
+            QuestionTitle(
+              quizBrain: _quizBrain,
             ),
             const SizedBox(
               height: 50,
             ),
-            ...currentQuestion.answers
-                .map((e) => AnswerButton(text: e, onTap: nextQuestion)),
+            AnswersList(
+              onTap: _nextQuestion,
+              children: _quizBrain.questionAnswersList,
+            ),
           ],
         ),
       ),

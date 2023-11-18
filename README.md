@@ -6,3 +6,4 @@
 - **Lab 2**: N/A - _Ejercicio. Completar el Card 2_
 - **Lab 3**: N/A
 - **Lab 4**: N/A
+- **Lab 5**: N/A
