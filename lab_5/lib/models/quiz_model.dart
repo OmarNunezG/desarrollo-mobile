@@ -1,6 +1,6 @@
 class QuizModel {
-  String question;
-  List<String> answers = [];
+  final String question;
+  final List<String> answers;
 
-  QuizModel(this.question, this.answers);
+  const QuizModel(this.question, this.answers);
 }
