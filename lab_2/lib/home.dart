@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'card.dart';
+import 'display_card.dart';
 import 'card_1.dart';
 import 'card_2.dart';
+import 'card_3.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -24,8 +25,9 @@ class _HomeState extends State<Home> {
       image: 'mag5',
       child: Card2(),
     ),
-    Container(
-      color: Colors.blue,
+    const DisplayCard(
+      image: "mag2",
+      child: Card3(),
     ),
   ];
 
