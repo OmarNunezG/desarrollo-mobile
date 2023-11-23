@@ -3,8 +3,52 @@ import 'package:flutter/material.dart';
 import 'circle_image.dart';
 import 'food_theme.dart';
 
-class AuthorCard extends StatelessWidget {
+class AuthorCard extends StatefulWidget {
   const AuthorCard({super.key});
+
+  @override
+  State<AuthorCard> createState() => _AuthorCardState();
+}
+
+class _AuthorCardState extends State<AuthorCard> {
+  bool _favorite = false;
+  IconData _icon = Icons.favorite_outline;
+  Color _iconColor = Colors.grey;
+
+  SnackBar _getSnackBar(String text, void Function() onPressed) {
+    return SnackBar(
+      content: Text(text),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: onPressed,
+      ),
+    );
+  }
+
+  void _showSnackBar(SnackBar snackBar) {
+    final scaffoldMessengerState = ScaffoldMessenger.of(context);
+    scaffoldMessengerState.clearSnackBars();
+    scaffoldMessengerState.showSnackBar(snackBar);
+  }
+
+  void _manageFavorite() {
+    setState(() {
+      if (_favorite) {
+        _icon = Icons.favorite_outline;
+        _iconColor = Colors.grey;
+
+        final snackBar = _getSnackBar('Removed from favorite', _manageFavorite);
+        _showSnackBar(snackBar);
+      } else {
+        _icon = Icons.favorite;
+        _iconColor = Colors.red;
+
+        final snackBar = _getSnackBar('Added to favorite', _manageFavorite);
+        _showSnackBar(snackBar);
+      }
+      _favorite = !_favorite;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +79,10 @@ class AuthorCard extends StatelessWidget {
             ],
           ),
           IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite_border,
-              color: Colors.grey,
+            onPressed: _manageFavorite,
+            icon: Icon(
+              _icon,
+              color: _iconColor,
             ),
           ),
         ],
@@ -46,3 +90,5 @@ class AuthorCard extends StatelessWidget {
     );
   }
 }
+
+// Add SnackBar when adding or removing from favorite
