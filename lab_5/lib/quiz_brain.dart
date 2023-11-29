@@ -8,7 +8,7 @@ class QuizBrain {
 
   final void Function() _onFinish;
 
-  final List<QuizModel> _questionList = questions;
+  final List<QuizModel> _questionList = List.of(questions);
 
   int get asserts => _asserts;
 
