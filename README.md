@@ -7,3 +7,6 @@
 - **Lab 3**: N/A
 - **Lab 4**: N/A
 - **Lab 5**: N/A
+- **Lab 6**: N/A
+- **Lab 7**: N/A
+- **Lab 8**: N/A
