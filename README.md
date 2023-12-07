@@ -10,3 +10,4 @@
 - **Lab 6**: N/A
 - **Lab 7**: N/A
 - **Lab 8**: N/A
+- **Ejercicio Práctico**: N/A
