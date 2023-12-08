@@ -7,9 +7,13 @@ class EntryDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('It\'s going to be a great birthdate. We are going out'
-        ' for dinner at my favorite place, then watch a movie'
-        ' after we go to the gelateria for ice cream and'
-        ' espresso.');
+    return Text(
+      'It\'s going to be a great birthdate. We are going out for dinner at my'
+      ' favorite place, then watch a movie  after we go to the gelateria for'
+      ' ice cream and espresso.',
+      style: TextStyle(
+        color: Colors.grey[700],
+      ),
+    );
   }
 }

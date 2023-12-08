@@ -7,9 +7,10 @@ class WeatherSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Row(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Column(
+        const Column(
           children: [
             Icon(
               Icons.sunny,
@@ -17,18 +18,30 @@ class WeatherSection extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(),
+        const SizedBox(
+          width: 20,
+        ),
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            const Row(
               children: [
-                Text('81º Clear'),
+                Text(
+                  '81º Clear',
+                  style: TextStyle(
+                    color: Colors.deepOrangeAccent,
+                  ),
+                ),
               ],
             ),
             Row(
               children: [
-                Text('4500 San Alpho Drive, Dallas, TX United'
-                    ' States'),
+                Text(
+                  '4500 San Alpho Drive, Dallas, TX United States',
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                  ),
+                ),
               ],
             ),
           ],

@@ -45,21 +45,9 @@ class JournalEntryScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     EntryTitle(),
-                    SizedBox(
-                      height: 8,
-                    ),
                     EntryDescription(),
-                    SizedBox(
-                      height: 8,
-                    ),
                     WeatherSection(),
-                    SizedBox(
-                      height: 8,
-                    ),
                     EntryLabels(),
-                    SizedBox(
-                      height: 8,
-                    ),
                     FooterImages(),
                   ],
                 ),
