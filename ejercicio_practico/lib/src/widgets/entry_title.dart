@@ -7,6 +7,12 @@ class EntryTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('My Birthday');
+    return const Text(
+      'My Birthday',
+      style: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.bold,
+      ),
+    );
   }
 }

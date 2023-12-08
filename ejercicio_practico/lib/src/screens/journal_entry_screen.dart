@@ -1,9 +1,10 @@
-import 'package:ejercicio_practico/src/widgets/entry_description.dart';
-import 'package:ejercicio_practico/src/widgets/entry_labels.dart';
-import 'package:ejercicio_practico/src/widgets/entry_title.dart';
-import 'package:ejercicio_practico/src/widgets/footer_images.dart';
-import 'package:ejercicio_practico/src/widgets/weather_section.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/entry_description.dart';
+import '../widgets/entry_labels.dart';
+import '../widgets/entry_title.dart';
+import '../widgets/footer_images.dart';
+import '../widgets/weather_section.dart';
 
 class JournalEntryScreen extends StatelessWidget {
   const JournalEntryScreen({super.key});
@@ -31,15 +32,34 @@ class JournalEntryScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Image.network('https://5.imimg.com/data5/HC/EV/MY-15940038'
-                  '/diwali-gift-box.jpg'),
+              Image.network(
+                'https://5.imimg.com/data5/HC/EV/MY-15940038/diwali-gift-'
+                'box.jpg',
+                height: MediaQuery.of(context).size.height * 0.3,
+                width: double.infinity,
+                fit: BoxFit.contain,
+              ),
               const SafeArea(
+                minimum: EdgeInsets.all(15),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     EntryTitle(),
+                    SizedBox(
+                      height: 8,
+                    ),
                     EntryDescription(),
+                    SizedBox(
+                      height: 8,
+                    ),
                     WeatherSection(),
+                    SizedBox(
+                      height: 8,
+                    ),
                     EntryLabels(),
+                    SizedBox(
+                      height: 8,
+                    ),
                     FooterImages(),
                   ],
                 ),
